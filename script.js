@@ -13,6 +13,8 @@ let colorsShown;
 
 let shape = 1;
 
+let max_rows = 3;
+
 function id(id) { return document.getElementById(id) }
 
 function loadGame() {
@@ -27,8 +29,9 @@ function loadGame() {
     generateGameArea();
     resetRows();
     setObjective();
-    setShape(shape);
     sizeControls();
+    setShape(1);
+    console.log(objective);
 }
 
 function generateControls() {
@@ -135,41 +138,71 @@ function resetBorders(row) {
     });
 }
 
+function removeAllBorders() {
+    document.querySelectorAll(".circle").forEach(circle => {
+        circle.style.border = "none";
+    });
+}
+
 function checkGuess() { 
     if (Object.keys(guessed).length == guess_length) {
         selected = -1;
+
+        let temp_objective = [];
+        let temp_guessed = [];
+
+        let used = [false, false, false, false];
+        
+        for (let i = 0; i < guess_length; i++) {
+            temp_objective.push(objective[i].color);
+            temp_guessed.push(guessed[i].color);
+        }
 
         let win = true;
 
         //For each color guessed
         for (let i = 0; i < guess_length; i++) {
+            console.log(used);
+            console.log("RIGHT POSITION?", temp_objective[i] == temp_guessed[i]);
 
-            console.log("GUESS", guessed[i].color);
             //If Color is in correct position 
-            if (objective[i] == guessed[i].color) {
+            if (temp_objective[i] == temp_guessed[i] && !used[i]) {
+                used[i] = true;
                 id(guessed[i].id).style.boxShadow = "0 0 15px #00FF00";
-                console.log("CORRECT GUESS");
             }
-            //If color exists
-            else if (Object.values(objective).includes(guessed[i].color)) {
+
+            //If guessed color is in the objectives at least once
+            else if (temp_objective.includes(temp_guessed[i])) {
                 win = false;
-                id(guessed[i].id).style.boxShadow = "0 0 15px #0000FF";
-                console.log("INCLUDED GUESS");
+                console.log("INCLUDED", temp_objective.includes(temp_guessed[i]));
+                let checked = checkUsed(temp_objective, temp_guessed[i], used);
+                if (compare(checked, used)) {
+                    console.log("BUT USED");
+                    id(guessed[i].id).style.boxShadow = "0 0 15px #0000FF";
+                }
+                else {
+                    console.log("UNUSED");
+                    used = checked;
+                }
             }
+        
             //Otherwise
             else {
+                console.log("NOT INCLUDED");
+                used[i] = true;
                 win = false;
                 if (red_highlights) id(guessed[i].id).style.boxShadow = "0 0 15px #FF0000";
                 red_highlighted.push(guessed[i].id);
                 id(guessed[i].color).style.display = "none";
                 colorsShown -= 1;
                 sizeControls();
-                console.log("WRONG GUESS, Hidden", guessed[i].color);
             }
         }
 
         if (win) {
-            alert("YOU WINS!!");
+            party.confetti(id("gameArea"), {
+                count: party.variation.range(80, 80)
+            });
             endGame();
         }
         else {
@@ -193,7 +226,10 @@ function checkGuess() {
 function setObjective() {
     var size = Object.keys(useableColors).length;
     for (let i = 0; i < guess_length; i++) {
-        objective[i] = Object.keys(useableColors)[Math.floor(Math.random() * size)];
+        objective[i] = {
+            color: Object.keys(useableColors)[Math.floor(Math.random() * size)],
+            position: i
+        }
     }
 }
 
@@ -207,6 +243,7 @@ function removeEventListeners() {
 
 function endGame() {
     removeEventListeners();
+    removeAllBorders();
 }
 
 function resetGame() {
@@ -263,6 +300,26 @@ function setShape(s) {
     });
 }
 
+function compare(a, b) {
+    let same = true;
+    for (let i = 0; i < a.length; a++) {
+        if (a != b) {
+            same = false;
+        }
+    }
+    return same;
+}
+
+function checkUsed(arr, value, used) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == value) {
+            if (!used[i]) {
+                used[i] = true;
+            }
+        }
+    }
+    return used;
+}
 
 id("redHighlights").addEventListener("change", function(e) {
 
@@ -285,19 +342,14 @@ window.addEventListener('resize', function(e) {
 });
 
 function sizeControls() {
-    let area = document.querySelector(".controlArea").getBoundingClientRect();
-    let control = document.querySelector(".color").getBoundingClientRect();
+    let control_size = document.querySelector(".circle").getBoundingClientRect().width * 0.8;
 
-    let rows = Math.floor(area.height / control.height) - 1;
-    if (rows > 4) rows = 4;
-    let cols = Math.floor((colorsShown + 1) / rows);
+    id("controlArea").style.width = (control_size * 5) + "px";
 
-    console.log("rows", rows);
-    console.log("cols", cols);
-    console.log("controls", colorsShown + 1);
-
-    id("controlArea").style.width = (control.width * (cols + 1)) + "px";
+    document.querySelectorAll(".color").forEach(color => {
+        color.style.width = control_size + "px";
+        color.style.height = control_size + "px";
+    })
 }
 
 loadGame();
-setShape(1);

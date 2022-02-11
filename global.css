@@ -74,10 +74,16 @@ html, body {
 
 #controlArea {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controls {
+    display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    height:30%;
+    width: 100%;
+    height: 30%;
 }
 
 .circle {
