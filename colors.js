@@ -1,54 +1,87 @@
 let colors = {
     "red": {
-        color:"#FF0000"
+        color:"#FF0000",
+        difficulty:0
     },
     "orange": {
-        color:"#ff9e00"
+        color:"#ff9e00",
+        difficulty:0
     },
     "yellow_orange": {
-        color:"#f2cd64"
+        color:"#f2cd64",
+        difficulty:2
     },
-    "light_yellow": {
-        color:"#fffc00"
+    "yellow": {
+        color:"#fffc00",
+        difficulty:0
+    },
+    "dark_yellow": {
+        color:"#cecc00",
+        difficulty:1
     },
     "light_green": {
-        color:"#0aff00"
+        color:"#0aff00",
+        difficulty:0
     },
     "dark_green": {
-        color:"#00a008"
+        color:"#00a008",
+        difficulty:0
+    },
+    "darkdark_green": {
+        color:"#0f4612",
+        difficulty:1
     },
     "light_blue": {
-        color:"#00ffed"
+        color:"#00ffed",
+        difficulty:0
+    },
+    "teal": {
+        color:"#008080",
+        difficulty:1
+    },
+    "blue": {
+        color:"#00a6ff",
+        difficulty:0
     },
     "dark_blue": {
-        color:"#0000FF"
+        color:"#0000FF",
+        difficulty:1
     },
     "indigo": {
-        color:"#6700ff"
+        color:"#6700ff",
+        difficulty:0
     },
     "violet": {
-        color:"#ba00ff"
+        color:"#ba00ff",
+        difficulty:0
     },
     "pink": {
-        color:"#ff7ce6"
+        color:"#ff7ce6",
+        difficulty:0
     },
     "skin": {
-        color:"#eac4c4"
+        color:"#eac4c4",
+        difficulty:1
     },
     "black": {
-        color:"#000000"
+        color:"#000000",
+        difficulty:2
     },
     "light_brown": {
-        color:"#964B00"
+        color:"#964B00",
+        difficulty:2
     },
     "brown": {
-        color:"#6c5106"
+        color:"#6c5106",
+        difficulty:2
     },
     "gray": {
-        color:"#8c7f89"
+        color:"#8c7f89",
+        difficulty:2
     },
     "white": {
-        color:"#FFFFFF"
+        color:"#FFFFFF",
+        difficulty:2
     }
 }
 
