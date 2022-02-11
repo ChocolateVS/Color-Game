@@ -5,11 +5,15 @@ let objective = {};
 let selected;
 let guess_length = 4;
 
+let hardMode = false;
 let red_highlights = true;
 let red_highlighted = [];
 let difficulty = 1;
 let useableColors = {};
 let colorsShown;
+
+let previous_correct;
+let previous_absolute;
 
 let shape = 1;
 
@@ -21,9 +25,11 @@ function loadGame() {
     id("gameArea").innerHTML = ""; 
     id("controlArea").innerHTML = "";
     guess = 0;
-    selected = -1;
+    selected = 0;
     guessed = {};
     objective = {};
+    previous_correct = [];
+    previous_absolute = [false, false, false, false];
     setColors();
     generateControls();
     generateGameArea();
@@ -91,10 +97,18 @@ function setColors() {
 function setColor(color) {
     if (selected > -1) {
         id(selected).style.backgroundColor = useableColors[color].color;
-        guessed[selected%guess_length] = {
+
+        guessed[selected % guess_length] = {
             "color": color,
             "id": selected
         }
+
+        if (selected + 1 < guess_length * (guess + 1)) {
+            console.log(true);
+            id(selected).style.borderColor = "#000000";
+            selected ++;
+            id(selected).style.borderColor = "#01dae7";
+        } 
     }
 }
 
@@ -126,6 +140,9 @@ function setActiveRow(row) {
             e.target.style.cursor = "pointer";
         });
     });
+
+    selected = row * guess_length;
+    document.getElementById(selected).style.borderColor = "#01dae7";
 }
 
 function resetBorders(row) {
@@ -152,13 +169,25 @@ function checkGuess() {
         let temp_guessed = [];
 
         let used = [false, false, false, false];
+
+        let win = true;
         
         for (let i = 0; i < guess_length; i++) {
             temp_objective.push(objective[i].color);
             temp_guessed.push(guessed[i].color);
         }
 
-        let win = true;
+        if (hardMode) {
+            console.log("HARD MODE CHECK", previous_correct);
+            console.log("GUESSES", temp_guessed);
+            for (let i = 0; i < previous_correct.length; i++) {
+                if (!temp_guessed.includes(previous_correct[0][i])) {
+                    alert("HARD MODE IS ON, Your guess must contain all previously correct colors");
+                    return;
+                }
+            }
+        }
+        console.log("hard mode check succeed");
 
         //For each color guessed
         for (let i = 0; i < guess_length; i++) {
@@ -168,6 +197,7 @@ function checkGuess() {
             //If Color is in correct position 
             if (temp_objective[i] == temp_guessed[i] && !used[i]) {
                 used[i] = true;
+                previous_correct.push([temp_guessed[i], true]);
                 id(guessed[i].id).style.boxShadow = "0 0 15px #00FF00";
             }
 
@@ -177,7 +207,8 @@ function checkGuess() {
                 console.log("INCLUDED", temp_objective.includes(temp_guessed[i]));
                 let checked = checkUsed(temp_objective, temp_guessed[i], used);
                 if (compare(checked, used)) {
-                    console.log("BUT USED");
+                    console.log("USED");
+                    previous_correct.push(temp_guessed[i], false);
                     id(guessed[i].id).style.boxShadow = "0 0 15px #0000FF";
                 }
                 else {
@@ -333,7 +364,7 @@ id("redHighlights").addEventListener("change", function(e) {
 });
 
 id("hardMode").addEventListener("change", function(e) {
-    console.log("Hard Mode", this.checked);
+    hardMode = this.checked;
 });
 
 window.addEventListener('resize', function(e) {
