@@ -128,6 +128,7 @@ function checkGuess() {
 
         if (correct) {
             alert("YOU WINS!!");
+            removeEventListeners();
         }
         else {
             guessed = {};
