@@ -10,7 +10,6 @@ let red_highlights = true;
 let red_highlighted = [];
 let difficulty = 1;
 let useableColors = {};
-let colorsShown;
 
 let previous_correct;
 let previous_absolute;
@@ -37,7 +36,7 @@ function loadGame() {
     setObjective();
     sizeControls();
     setShape(1);
-    console.log(objective);
+    console.log("OBJECTIVE", objective[0].color, objective[1].color, objective[2].color, objective[3].color);
 }
 
 function generateControls() {
@@ -91,7 +90,6 @@ function setColors() {
             useableColors[key] = value;
         }
     }
-    colorsShown = Object.entries(useableColors).length;
 }
 
 function setColor(color) {
@@ -104,7 +102,6 @@ function setColor(color) {
         }
 
         if (selected + 1 < guess_length * (guess + 1)) {
-            console.log(true);
             id(selected).style.borderColor = "#000000";
             selected ++;
             id(selected).style.borderColor = "#01dae7";
@@ -165,19 +162,10 @@ function checkGuess() {
     if (Object.keys(guessed).length == guess_length) {
         selected = -1;
 
-        let temp_objective = [];
-        let temp_guessed = [];
+        let _objective = calcObject(objective);
+        let _guessed = calcObject(guessed);
 
-        let used = [false, false, false, false];
-
-        let win = true;
-        
-        for (let i = 0; i < guess_length; i++) {
-            temp_objective.push(objective[i].color);
-            temp_guessed.push(guessed[i].color);
-        }
-
-        if (hardMode) {
+        /*if (hardMode) {
             console.log("HARD MODE CHECK", previous_correct);
             console.log("GUESSES", temp_guessed);
             for (let i = 0; i < previous_correct.length; i++) {
@@ -186,51 +174,106 @@ function checkGuess() {
                     return;
                 }
             }
-        }
-        console.log("hard mode check succeed");
+        }*/
+
+        console.log("\n", "GUESS", _guessed);
+        console.log("Objective", _objective, "\n");
+
+        let guess_colors = Object.keys(_guessed);
+
+        let correct = [];
+        let blue = [];
+        let red = [];
 
         //For each color guessed
-        for (let i = 0; i < guess_length; i++) {
-            console.log(used);
-            console.log("RIGHT POSITION?", temp_objective[i] == temp_guessed[i]);
+        for (let i = 0; i < guess_colors.length; i++) {
 
-            //If Color is in correct position 
-            if (temp_objective[i] == temp_guessed[i] && !used[i]) {
-                used[i] = true;
-                previous_correct.push([temp_guessed[i], true]);
-                id(guessed[i].id).style.boxShadow = "0 0 15px #00FF00";
-            }
+            console.log("ELEMENT", i, "Guess", guess_colors[i], "Should be", Object.keys(_objective)[i]);
+            
+            //For each position of the guessed color in the guess 
+            _guessed[guess_colors[i]].forEach(guess_position => {
 
-            //If guessed color is in the objectives at least once
-            else if (temp_objective.includes(temp_guessed[i])) {
-                win = false;
-                console.log("INCLUDED", temp_objective.includes(temp_guessed[i]));
-                let checked = checkUsed(temp_objective, temp_guessed[i], used);
-                if (compare(checked, used)) {
-                    console.log("USED");
-                    previous_correct.push(temp_guessed[i], false);
-                    id(guessed[i].id).style.boxShadow = "0 0 15px #0000FF";
+                try {
+                    let check_colors = _objective[guess_colors[i]];
+
+                    //For each position in the objective of the color that we're looking for
+                    for (let j = 0; j < check_colors.length; j++) {
+
+                        console.log("Check", guess_colors[i], "at position", guess_position, "in guess and position", check_colors[j], "in objective");
+
+                        //If guess was in objectives at the correct index
+                        if (guess_position == check_colors[j]) {
+                            console.log(guess_colors[i], "was found at index", check_colors[j], "of objectives added", guess_position, guess_colors[i], 'to correct');
+                            id(guessed[check_colors[j]].id).style.boxShadow = "0 0 15px #00FF00";
+                            correct.push([guess_position, guess_colors[i]]);
+                        }
+                        else {
+                            console.log(guess_colors[i], "was found at incorrect index", check_colors[j], "of objectives added", guess_position, guess_colors[i], 'to blue');
+                            blue.push([guess_position, guess_colors[i]]);
+                        }
+                    }
+                                    
                 }
+                catch (e) {
+                    console.log("Not Found"); 
+                    red.push(guess_position);
+                }
+            });
+        }
+
+        //For each guess that is included in the objective, before turning blue we need to check
+        //if the guess color is not one of the correct guesses, and it is not the same color as a correct guess, unless the objective contains multiple of the color guessed
+            //increment amount correct of type of guess
+        //else if the guess color is one of the correct objectives AND objective contains multiple of the color guessed
+            //if so increment amount correct of type of guess
+
+        console.log("\n ARRAYS", "BLUE", blue, "GREEN", correct);
+
+        final_guesses = {};
+
+        for (let i = 0; i < blue.length; i++) {  
+            let color = blue[i][1];
+            let index = blue[i][0];
+            let amount_correct_of_color = countAmount(color, correct, 1);
+            let should_be_correct_of_color = _objective[color].length;
+                
+            //If guess exists but is not in correct position
+            //And the amount of things in correct position < number of possible positions is 
+            
+            console.log("CHECKING COLOR", color, "@ INDEX", index);
+            console.log("AMOUNT OF ", color, "IN CORRECT POSITION", amount_correct_of_color, "POSSIBLE AMOUNT OF COLOR CORRECT", should_be_correct_of_color);
+
+            //If amount of items in same position as a correct item > 1 : can't replace correct item
+            if (countAmount(index, correct, 0) == 0) {
+
+                //if guessed color is not the same color as a correct guess, unless the objective contains multiple of the color guessed
+                if (amount_correct_of_color == 0 || amount_correct_of_color < should_be_correct_of_color) {
+                    id(guessed[index].id).style.boxShadow = "0 0 15px #0000FF"; 
+                    console.log("BLUE"); 
+                }
+                //Else if its not included in the correct, it be red
                 else {
-                    console.log("UNUSED");
-                    used = checked;
+                    red.push(index);
+                    console.log("RED");
                 }
             }
-        
-            //Otherwise
             else {
-                console.log("NOT INCLUDED");
-                used[i] = true;
-                win = false;
-                if (red_highlights) id(guessed[i].id).style.boxShadow = "0 0 15px #FF0000";
-                red_highlighted.push(guessed[i].id);
-                id(guessed[i].color).style.display = "none";
-                colorsShown -= 1;
-                sizeControls();
+                console.log("GREEN");
             }
         }
 
-        if (win) {
+        red.forEach(e => {
+            if (red_highlights) id(guessed[e].id).style.boxShadow = "0 0 15px #FF0000";
+            red_highlighted.push(guessed[e].id);
+
+            if (countAmount(guessed[e].color, correct, 1) == 0) {
+                id(guessed[e].color).style.display = "none";
+            } 
+        });
+
+        sizeControls(); 
+
+        if (blue.length == 0 && red.length == 0) {
             party.confetti(id("gameArea"), {
                 count: party.variation.range(80, 80)
             });
@@ -253,6 +296,57 @@ function checkGuess() {
     }
     console.log("\n");
 }
+
+//Returns amount of "something", in an array
+//index 0 is position
+//index 1 is color
+
+function countAmount(thing, arr, index) {
+    let count = 0;
+    
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i][index] == thing) count ++;
+    }
+
+    return count;
+}
+
+function calcObject(o) {
+    const counts = {};
+
+    for (const value of Object.values(o)) {
+        let pos = countInArray(Object.values(o), value.color);
+        counts[value.color] = pos;
+    }
+    return counts;
+}
+
+function countInArray(array, what) {
+    var pos = [];
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].color === what) {
+            pos.push(i);
+        }
+    }
+    return pos;
+}
+
+/*function check(used, temp_g, g) {
+    //Find first unused occurences of the guess in the objective
+    for (let j = 0; j < Object.values(used).length; j++) {
+        console.log("CHECKING", used[j].type, temp_guessed[i], used[j].used);
+        if (used[j].type == temp_guessed[i] && !used[j].used) {
+            
+            console.log("BLUE?", g[i], g[j]);
+            
+            used[j].used = true;
+
+            previous_correct.push(temp_guessed[j], false);
+            id(guessed[j].id).style.boxShadow = "0 0 15px #0000FF";
+            id(guessed[i].id).style.boxShadow = "0 0 15px #0000FF";
+        }
+    }
+}*/
 
 function setObjective() {
     var size = Object.keys(useableColors).length;
@@ -329,27 +423,6 @@ function setShape(s) {
     document.querySelectorAll(".color").forEach(control => {
         control.style.borderRadius = control_radius + "px"; 
     });
-}
-
-function compare(a, b) {
-    let same = true;
-    for (let i = 0; i < a.length; a++) {
-        if (a != b) {
-            same = false;
-        }
-    }
-    return same;
-}
-
-function checkUsed(arr, value, used) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == value) {
-            if (!used[i]) {
-                used[i] = true;
-            }
-        }
-    }
-    return used;
 }
 
 id("redHighlights").addEventListener("change", function(e) {
