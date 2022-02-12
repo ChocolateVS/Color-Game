@@ -185,6 +185,8 @@ function checkGuess() {
         let blue = [];
         let red = [];
 
+        let win = true;
+
         //For each color guessed
         for (let i = 0; i < guess_colors.length; i++) {
 
@@ -208,6 +210,7 @@ function checkGuess() {
                             correct.push([guess_position, guess_colors[i]]);
                         }
                         else {
+                            win = false;
                             console.log(guess_colors[i], "was found at incorrect index", check_colors[j], "of objectives added", guess_position, guess_colors[i], 'to blue');
                             blue.push([guess_position, guess_colors[i]]);
                         }
@@ -215,6 +218,7 @@ function checkGuess() {
                                     
                 }
                 catch (e) {
+                    win = false;
                     console.log("Not Found"); 
                     red.push(guess_position);
                 }
@@ -273,7 +277,7 @@ function checkGuess() {
 
         sizeControls(); 
 
-        if (blue.length == 0 && red.length == 0) {
+        if (win) {
             party.confetti(id("gameArea"), {
                 count: party.variation.range(80, 80)
             });
