@@ -210,7 +210,6 @@ function checkGuess() {
                             correct.push([guess_position, guess_colors[i]]);
                         }
                         else {
-                            win = false;
                             console.log(guess_colors[i], "was found at incorrect index", check_colors[j], "of objectives added", guess_position, guess_colors[i], 'to blue');
                             blue.push([guess_position, guess_colors[i]]);
                         }
@@ -252,11 +251,13 @@ function checkGuess() {
 
                 //if guessed color is not the same color as a correct guess, unless the objective contains multiple of the color guessed
                 if (amount_correct_of_color == 0 || amount_correct_of_color < should_be_correct_of_color) {
+                    win = false;
                     id(guessed[index].id).style.boxShadow = "0 0 15px #0000FF"; 
                     console.log("BLUE"); 
                 }
                 //Else if its not included in the correct, it be red
                 else {
+                    win = false;
                     red.push(index);
                     console.log("RED");
                 }
