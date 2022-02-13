@@ -30,31 +30,35 @@
             <div id="options">
                 <div class="options">
                     <div class="dropdown">
-                        <button class="dropbtn">Options ˅</button>
+                        <button class="dropbtn" id="option_header">Easy Mode ˅</button>
                         <div class="dropdown-content">
-                            <div class="option">
-                                <p class="option_name">Hard Mode</p>
-                                <label class="switch">
-                                    <input type="checkbox" id="hardMode">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="option">
-                                <p class="option_name">Red Highlights</p>
-                                <label class="switch">
-                                    <input type="checkbox" id="redHighlights" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
+                            <input type="button" class="option_button" value="Normal Mode" onclick="setMode(0)">
+                            <input type="button" class="option_button" value="Classic Mode" onclick="setMode(1)">
+                            <input type="button" class="option_button" value="Hard Mode" onclick="setMode(2)">
                         </div>
                     </div>
 
                     <div class="dropdown">
-                        <button class="dropbtn" id="difficulty_header">Medium ˅</button>
+                        <button class="dropbtn">Options ˅</button>
                         <div class="dropdown-content">
-                            <input type="button" class="difficulty_button" value="Easy" onclick="setDifficulty(0)">
-                            <input type="button" class="difficulty_button" value="Medium" onclick="setDifficulty(1)">
-                            <input type="button" class="difficulty_button" value="Hard" onclick="setDifficulty(2)">
+
+                            <div class="option">
+                                <p class="option_name">Red Highlights</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="redHighlights" checked>
+                                    <span class="slider round red"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropbtn" id="num_colors_header" class="option_header">Colors - Normal ˅</button>
+                        <div class="dropdown-content">
+                            <input type="button" id="numColorsBtn0" class="option_button" value="Colors - Few" onclick="setNumColors(0)">
+                            <input type="button" id="numColorsBtn1" class="option_button" value="Colors - Normal" onclick="setNumColors(1)">
+                            <input type="button" id="numColorsBtn2" class="option_button" value="Colors - Lots" onclick="setNumColors(2)">
                         </div>
                     </div>
                 </div>

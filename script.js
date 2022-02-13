@@ -5,14 +5,13 @@ let objective = {};
 let selected;
 let guess_length = 4;
 
-let hardMode = false;
+let mode = 0;
 let red_highlights = true;
 let red_highlighted = [];
-let difficulty = 1;
+let numColors = 1;
 let useableColors = {};
 
 let previous_correct;
-let previous_absolute;
 
 let shape = 1;
 
@@ -86,7 +85,7 @@ function setColors() {
     useableColors = {};
 
     for (const [key, value] of Object.entries(colors)) {
-        if (value.difficulty <= difficulty) {
+        if (value.difficulty <= numColors) {
             useableColors[key] = value;
         }
     }
@@ -323,18 +322,21 @@ function resetGame() {
     loadGame();
 }
 
-function setDifficulty(diff) {
-    if (diff == 0) {
-        id("difficulty_header").textContent = "Easy ˅";
-        difficulty = 0;
+function setNumColors(num) {
+    numColors = num;
+    id("numColorsBtn0").style.boxShadow = "";
+    id("numColorsBtn1").style.boxShadow = "";
+    id("numColorsBtn2").style.boxShadow = "";
+    id("numColorsBtn" + num).style.boxShadow = "0 0 5px #000000";
+
+    if (num == 0) {
+        id("num_colors_header").textContent = "Colors - Few ˅";
     }
-    if (diff == 1) {
-        id("difficulty_header").textContent = "Medium ˅";
-        difficulty = 1;
+    if (num == 1) {
+        id("num_colors_header").textContent = "Colors - Normal ˅";
     }
-    if (diff == 2) {
-        id("difficulty_header").textContent = "Hard ˅";
-        difficulty = 2;
+    if (num == 2) {
+        id("num_colors_header").textContent = "Colors - Lots ˅";
     }
 }
 
@@ -382,10 +384,6 @@ id("redHighlights").addEventListener("change", function(e) {
         else id(e).style.boxShadow = "0 0 0px #FF0000";
     });
     
-});
-
-id("hardMode").addEventListener("change", function(e) {
-    hardMode = this.checked;
 });
 
 window.addEventListener('resize', function(e) {
