@@ -6,6 +6,8 @@ let selected;
 let guess_length = 4;
 
 let mode = 0;
+let theme = "light";
+
 let red_highlights = true;
 let red_highlighted = [];
 let numColors = 1;
@@ -22,6 +24,12 @@ function id(id) { return document.getElementById(id) }
 function loadGame() {
     id("gameArea").innerHTML = ""; 
     id("controlArea").innerHTML = "";
+
+    removeShadow(["numColorsBtn0", "numColorsBtn1", "numColorsBtn2"]);
+    removeShadow(["modeBtn0", "modeBtn1", "modeBtn2"]);
+    setShadow(["numColorsBtn" + numColors], "5px", option_color );
+    setShadow(["modeBtn" + mode], "5px", option_color );
+
     guess = 0;
     selected = 0;
     guessed = {};
@@ -324,19 +332,35 @@ function resetGame() {
 
 function setNumColors(num) {
     numColors = num;
-    id("numColorsBtn0").style.boxShadow = "";
-    id("numColorsBtn1").style.boxShadow = "";
-    id("numColorsBtn2").style.boxShadow = "";
-    id("numColorsBtn" + num).style.boxShadow = "0 0 5px #000000";
 
-    if (num == 0) {
+    removeShadow(["numColorsBtn0", "numColorsBtn1", "numColorsBtn2"]);
+    setShadow(["numColorsBtn" + numColors], "5px", option_color );
+
+    if (numColors == 0) {
         id("num_colors_header").textContent = "Colors - Few ˅";
     }
-    if (num == 1) {
+    else if (numColors == 1) {
         id("num_colors_header").textContent = "Colors - Normal ˅";
     }
-    if (num == 2) {
+    else if (numColors == 2) {
         id("num_colors_header").textContent = "Colors - Lots ˅";
+    }
+}
+
+function setMode(m) {
+    mode = m;
+
+    removeShadow(["modeBtn0", "modeBtn1", "modeBtn2"]);
+    setShadow(["modeBtn"+ m], "5px", option_color );
+
+    if (mode == 0) {
+        id("mode_header").textContent = "Normal Mode ˅";
+    }
+    else if (mode == 1) {
+        id("mode_header").textContent = "Classic Mode ˅";
+    }
+    else if (mode == 2) {
+        id("mode_header").textContent = "Hard Mode ˅";
     }
 }
 
@@ -400,6 +424,20 @@ function sizeControls() {
         color.style.width = control_size + "px";
         color.style.height = control_size + "px";
     })
+}
+
+function setShadow(items, size, color) {
+    items.forEach(item => {
+        //console.log("SETTING SHADOW", id(item), "0 0 " + size + " " + color[theme]);
+        id(item).style.boxShadow = "0 0 " + size + " " + color[theme];
+    });
+}
+
+function removeShadow(items) {
+    items.forEach(item => {
+        //console.log("REMOVEING SHADOW", id(item));
+        id(item).style.boxShadow = "";
+    });
 }
 
 loadGame();

@@ -12,6 +12,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@700&display=swap" rel="stylesheet">
 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+
         <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
 
     </head>
@@ -29,20 +31,26 @@
             
             <div id="options">
                 <div class="options">
-                    <div class="dropdown">
-                        <button class="dropbtn" id="option_header">Easy Mode ˅</button>
-                        <div class="dropdown-content">
-                            <input type="button" class="option_button" value="Normal Mode" onclick="setMode(0)">
-                            <input type="button" class="option_button" value="Classic Mode" onclick="setMode(1)">
-                            <input type="button" class="option_button" value="Hard Mode" onclick="setMode(2)">
-                        </div>
-                    </div>
 
+                    <!-- OPTIONS -->
                     <div class="dropdown">
                         <button class="dropbtn">Options ˅</button>
                         <div class="dropdown-content">
 
-                            <div class="option">
+                            <!-- Guess Length -->
+                            <div class="option control">
+                                <p class="option_name">Guess Size:</p>
+                                <input class="numInput" type="number" id="guessSize" value="6" min="1" max="10">
+                            </div>
+
+                            <!-- Number of guesses -->
+                            <div class="option control">
+                                <p class="option_name">Guess Length:</p>
+                                <input class="numInput" type="number" id="numGuesses" value="6" min="1" max="20">
+                            </div>
+
+                            <!-- Red Highlihgts -->
+                            <div class="option control">
                                 <p class="option_name">Red Highlights</p>
                                 <label class="switch">
                                     <input type="checkbox" id="redHighlights" checked>
@@ -50,15 +58,35 @@
                                 </label>
                             </div>
 
+                            <!-- Theme -->
+                            <div class="option control">
+                                <p class="option_name">Dark Mode</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="redHighlights">
+                                    <span class="slider round theme"></span>
+                                </label>
+                            </div>
+
                         </div>
                     </div>
 
+                    <!-- NUMBER OF COLORS -->
                     <div class="dropdown">
                         <button class="dropbtn" id="num_colors_header" class="option_header">Colors - Normal ˅</button>
                         <div class="dropdown-content">
                             <input type="button" id="numColorsBtn0" class="option_button" value="Colors - Few" onclick="setNumColors(0)">
                             <input type="button" id="numColorsBtn1" class="option_button" value="Colors - Normal" onclick="setNumColors(1)">
                             <input type="button" id="numColorsBtn2" class="option_button" value="Colors - Lots" onclick="setNumColors(2)">
+                        </div>
+                    </div>
+
+                    <!-- MODE -->
+                    <div class="dropdown">
+                        <button class="dropbtn" id="mode_header" class="option_header">Normal Mode ˅</button>
+                        <div class="dropdown-content">
+                            <input type="button" id="modeBtn0" class="option_button" value="Normal Mode" onclick="setMode(0)">
+                            <input type="button" id="modeBtn1" class="option_button" value="Classic Mode" onclick="setMode(1)">
+                            <input type="button" id="modeBtn2" class="option_button" value="Hard Mode" onclick="setMode(2)">
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,9 @@
+let option_color = 
+{
+    light: "#000000",
+    dark: "#FFFFFF"
+}
+
 let colors = {
     "red": {
         color:"#FF0000",

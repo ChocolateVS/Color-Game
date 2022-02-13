@@ -4,7 +4,7 @@
   font-size: 16px;
   border: 1px solid rgb(211, 214, 218);
   cursor: pointer;
-  width:130px;
+  min-width:130px;
   text-align: left;
   padding:5px;
 }
@@ -22,13 +22,10 @@
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  min-width:150px;
 }
 
 .dropdown-content .option_button {
-  width:100%;
-}
-
-.dropdown-content .option {
   width:100%;
 }
 
@@ -95,4 +92,14 @@
 
 #rounded_option {
   border-radius:1vh;
+}
+
+.numInput {
+  width:60px;
+  height:34px;
+  font-size:20px;
+  font-family: 'Rowdies';
+  border:none;
+  text-align:center;
+  border-radius:25%;
 }
