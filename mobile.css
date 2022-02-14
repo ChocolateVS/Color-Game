@@ -1,5 +1,9 @@
 
-.circle {
+.cell, .stat_container {
     width:15vmin;
     height:15vmin;
+}
+
+.options {
+    display: none;
 }

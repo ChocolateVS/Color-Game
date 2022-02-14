@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>Color Game</title>
-        <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="mobile.css">
-        <link rel="stylesheet" href="style.css" media="screen and (min-device-width: 800px)" />
+        <link rel="stylesheet" href="mobile.css" media="screen and (max-device-width: 800px)">
+        <link rel="stylesheet" href="desktop.css" media="screen and (min-device-width: 800px)" />
         <link rel="stylesheet" href="global.css" />
         <link rel="stylesheet" href="dropdown.css" />
         <link rel="stylesheet" href="slider.css" />
@@ -22,11 +22,11 @@
             <div id="shape">
                 <input type="button" class="shape" id="square_option" onclick="setShape(2)">
                 <input type="button" class="shape" id="rounded_option" onclick="setShape(1)">
-                <input type="button" class="shape" id="circle_option" onclick="setShape(0)">
+                <input type="button" class="shape" id="cell_option" onclick="setShape(0)">
             </div>
             <div id="header_middle">
                 <h1 id="header_text">Color Game</h1>
-                <button id="resetButton"><img id="reset_img" src="reset.png" onclick="resetGame()"></button>
+                <button id="resetButton"><img id="reset_img" src="reset.png" onclick="loadGame()"></button>
             </div>
             
             <div id="options">
@@ -37,24 +37,57 @@
                         <button class="dropbtn">Options ˅</button>
                         <div class="dropdown-content">
 
+                            <!-- Number of guesses -->
+                            <div class="option control">
+                                <p class="option_name">Number of Guesses:</p>
+                                <input class="numInput" type="number" id="guessesInput" value="6" min="1" max="20">
+                            </div>
+
                             <!-- Guess Length -->
                             <div class="option control">
                                 <p class="option_name">Guess Size:</p>
-                                <input class="numInput" type="number" id="guessSize" value="6" min="1" max="10">
+                                <input class="numInput" type="number" id="guessSizeInput" value="4" min="1" max="10">
                             </div>
 
-                            <!-- Number of guesses -->
+                            <!-- Number of colors -->
                             <div class="option control">
-                                <p class="option_name">Guess Length:</p>
-                                <input class="numInput" type="number" id="numGuesses" value="6" min="1" max="20">
+                                <p class="option_name">Number of colors:</p>
+                                <input class="numInput" type="number" id="numColorsInput" value="5">
                             </div>
 
-                            <!-- Red Highlihgts -->
+                            <!-- Red Highlights -->
                             <div class="option control">
                                 <p class="option_name">Red Highlights</p>
                                 <label class="switch">
-                                    <input type="checkbox" id="redHighlights" checked>
+                                    <input type="checkbox" id="redHighlightsSwitch" checked>
                                     <span class="slider round red"></span>
+                                </label>
+                            </div>
+
+                            <!-- Highlights -->
+                            <div class="option control">
+                                <p class="option_name">Highlights</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="highlightsSwitch" checked>
+                                    <span class="slider round default"></span>
+                                </label>
+                            </div>
+
+                            <!-- Guess Stats -->
+                            <div class="option control">
+                                <p class="option_name">Show Guess Stats</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="statsSwitch">
+                                    <span class="slider round default"></span>
+                                </label>
+                            </div>
+
+                            <!-- Hide Incorrect Guesses -->
+                            <div class="option control">
+                                <p class="option_name">Hide Incorrect Guesses</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="hideIncorrectSwitch" checked>
+                                    <span class="slider round default"></span>
                                 </label>
                             </div>
 
@@ -62,7 +95,7 @@
                             <div class="option control">
                                 <p class="option_name">Dark Mode</p>
                                 <label class="switch">
-                                    <input type="checkbox" id="redHighlights">
+                                    <input type="checkbox" id="themeSwitch">
                                     <span class="slider round theme"></span>
                                 </label>
                             </div>
@@ -70,37 +103,35 @@
                         </div>
                     </div>
 
-                    <!-- NUMBER OF COLORS -->
-                    <div class="dropdown">
-                        <button class="dropbtn" id="num_colors_header" class="option_header">Colors - Normal ˅</button>
-                        <div class="dropdown-content">
-                            <input type="button" id="numColorsBtn0" class="option_button" value="Colors - Few" onclick="setNumColors(0)">
-                            <input type="button" id="numColorsBtn1" class="option_button" value="Colors - Normal" onclick="setNumColors(1)">
-                            <input type="button" id="numColorsBtn2" class="option_button" value="Colors - Lots" onclick="setNumColors(2)">
-                        </div>
-                    </div>
-
                     <!-- MODE -->
                     <div class="dropdown">
                         <button class="dropbtn" id="mode_header" class="option_header">Normal Mode ˅</button>
                         <div class="dropdown-content">
-                            <input type="button" id="modeBtn0" class="option_button" value="Normal Mode" onclick="setMode(0)">
-                            <input type="button" id="modeBtn1" class="option_button" value="Classic Mode" onclick="setMode(1)">
-                            <input type="button" id="modeBtn2" class="option_button" value="Hard Mode" onclick="setMode(2)">
+                            <input type="button" id="modeBtn_normal" class="option_button" value="Normal Mode" onclick="setMode('normal')">
+                            <input type="button" id="modeBtn_classic" class="option_button" value="Classic Mode" onclick="setMode('classic')">
+                            <input type="button" id="modeBtn_hard" class="option_button" value="Hard Mode" onclick="setMode('hard')">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="gameArea" id="gameArea">
-
-        </div>
-
-        <div class="controls">
-            <div class="controlArea" id="controlArea">
+        <div class="gameBody" id="gameBody">
+            <div class="gameArea" id="gameArea">
 
             </div>
+
+            <div id="controlArea" class="controlArea">
+  
+            </div>
+
+            <div id="endArea" class="endArea">
+                
+            </div> 
+        </div>
+
+        <div class="popup" id="popup">
+            <p class="text" id="popup_content">Reset game to apply changes</p>
         </div>
         
     </body>

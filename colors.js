@@ -4,90 +4,167 @@ let option_color =
     dark: "#FFFFFF"
 }
 
+let option_input = {
+    light: "#FFFFFF",
+    dark: "rgb(62 62 62)"
+}
+
+let shadows = {
+    default: {
+        light: "#888888",
+        dark: "#FFFFFF"
+    },
+    green: {
+        light: "#00FF00",
+        dark: "#00FF00"
+    },
+    blue: {
+        light: "#0000FF",
+        dark: "#0000FF"
+    },
+    red: {
+        light: "#FF0000",
+        dark: "#FF0000"
+    },
+    shapeType: {
+        light: "#000000",
+        dark: "#FFFFFF"
+    }
+}
+
+let bodyColors = {
+    background: {
+        light: "#f0eeeb",
+        dark: "#070808"
+    }
+}
+
+let headerColors = {
+    border: {
+        light: "#d3d6da",
+        dark: "#303030"
+    },
+    resetButton: {
+        light: "",
+        dark: "invert(100%) sepia(0%) saturate(0%) hue-rotate(34deg) brightness(107%) contrast(101%)"
+    },
+}
+
+let controlColors = {
+    border: {
+        light: "#d3d6da",
+        dark: "#62676c"
+    },
+    enter: {
+        light: "#efefef",
+        dark: "#070808"
+    }
+}
+
+let cellColors = {
+    border: {
+        light: "#d3d6da",
+        dark: "#62676c"
+    },
+    selected: {
+        light: "#01dae7",
+        dark: "#01daff"
+    },
+    active: {
+        light: "#000000",
+        dark: "#FFFFFF"
+    }
+}
+
+let textColors = {
+    default: {
+        light: "#000000",
+        dark: "#FFFFFF"
+    }
+}
+
+let dropDown = {
+    background: {
+        light: "#f9f9f9",
+        dark: "#070808"
+    },
+    shadow: {
+        light: "0px 8px 16px 0px rgba(0,0,0,0.2)",
+        dark: "0px 8px 16px 0px rgba(255,255,255,0.2)"
+    },
+    border: {
+        light: "rgb(211, 214, 218)",
+        dark: "#4e4e4e"
+    },
+    hover: {
+        light: "#000000",
+        dark: "#FFFFFF"
+    }
+}
+
 let colors = {
     "red": {
         color:"#FF0000",
-        difficulty:0
     },
     "orange": {
         color:"#ff9e00",
-        difficulty:0
     },
     "yellow_orange": {
         color:"#f2cd64",
-        difficulty:2
     },
     "yellow": {
         color:"#fffc00",
-        difficulty:0
     },
     "dark_yellow": {
         color:"#cecc00",
-        difficulty:1
     },
     "light_green": {
         color:"#0aff00",
-        difficulty:0
     },
     "dark_green": {
         color:"#00a008",
-        difficulty:0
     },
     "darkdark_green": {
         color:"#0f4612",
-        difficulty:1
     },
     "light_blue": {
         color:"#00ffed",
-        difficulty:0
     },
     "teal": {
         color:"#008080",
-        difficulty:1
     },
     "blue": {
         color:"#00a6ff",
-        difficulty:0
     },
     "dark_blue": {
         color:"#0000FF",
-        difficulty:1
     },
     "indigo": {
         color:"#6700ff",
-        difficulty:0
     },
     "violet": {
         color:"#ba00ff",
-        difficulty:0
     },
     "pink": {
         color:"#ff7ce6",
-        difficulty:0
     },
     "skin": {
         color:"#eac4c4",
-        difficulty:1
     },
     "black": {
-        color:"#000000",
-        difficulty:2
+        color:"#292929",
     },
     "light_brown": {
         color:"#964B00",
-        difficulty:2
     },
     "brown": {
         color:"#6c5106",
-        difficulty:2
     },
     "gray": {
         color:"#8c7f89",
-        difficulty:2
     },
     "white": {
         color:"#FFFFFF",
-        difficulty:2
     }
 }
 

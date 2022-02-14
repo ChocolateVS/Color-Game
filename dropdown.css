@@ -1,12 +1,14 @@
 .dropbtn {
-  color: black;
+  color: var(--text-color);
+  border: 1px solid;
+  border-color: var(--dropdown-button-border);
   font-family: 'Rowdies';
   font-size: 16px;
-  border: 1px solid rgb(211, 214, 218);
   cursor: pointer;
   min-width:130px;
   text-align: left;
   padding:5px;
+  background-color: transparent;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -19,10 +21,10 @@
 .dropdown-content {
   display:none;
   position: absolute;
-  background-color: #f9f9f9;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   min-width:150px;
+  background-color: var(--dropdown-content-background);
+  box-shadow: var(--dropdown-content-shadow);
 }
 
 .dropdown-content .option_button {
@@ -30,7 +32,7 @@
 }
 
 .option_button, .option {
-  color: black;
+  color: var(--text-color);
   font-family: 'Rowdies';
   padding: 12px 16px;
   text-align: left;
@@ -41,12 +43,7 @@
 }
 
 .option_button:hover {
-  box-shadow: 0 0 5px #000000;
-  cursor: pointer;
-}
-
-.shape:hover {
-  box-shadow: 0 0 5px #000000;
+  box-shadow: 0 0 5px var(--default-hover-color);
   cursor: pointer;
 }
 
@@ -57,16 +54,13 @@
   align-items:center;
 }
 
-
-/* Change color of dropdown links on hover */
-.dropdown-content input:hover {background-color: #f1f1f1}
-
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
 .option {
+  color: var(--text-color);
   display:flex;
   flex-direction:row;
   align-items:center;
@@ -76,6 +70,7 @@
 .option_name {
   width: 100px;
 }
+
 .shape {
   width:3vh;
   height:3vh;
@@ -86,7 +81,12 @@
   border: 1px solid #767676;
 }
 
-#circle_option {
+.shape:hover {
+  box-shadow: 0 0 5px var(--default-shadow);
+  cursor: pointer;
+}
+
+#cell_option {
   border-radius:30px;
 }
 
@@ -101,5 +101,7 @@
   font-family: 'Rowdies';
   border:none;
   text-align:center;
-  border-radius:25%;
+  border-radius:34px;
+  background-color: var(--option-input-background);
+  color: var(--text-color);
 }

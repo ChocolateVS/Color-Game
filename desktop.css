@@ -1,0 +1,16 @@
+
+.cell {
+    width:8vmin;
+    height:8vmin;
+}
+
+.stat_container {
+    width:6vmin;
+    height:7vmin;
+}
+
+.endColor {
+    width: 8vmin;
+    height: 8vmin;
+    border-radius:2vmin;
+}
