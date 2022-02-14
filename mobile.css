@@ -4,6 +4,15 @@
     height:15vmin;
 }
 
-.options {
+#options, .options, #shape {
     display: none;
+}
+
+#header_middle, #header {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }

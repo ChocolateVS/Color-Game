@@ -75,12 +75,14 @@ html, body {
 }
 
 
-#options, #shape {
+#shape {
     width:30%;
     margin: 35px;
 }
 
-#options {
+.options {
+    width:30%;
+    margin: 35px;
     display: flex;
     justify-content: right;
     align-items: center;

@@ -20,8 +20,6 @@ let previous_blue;
 
 let shape = 1;
 
-let max_rows = 3;
-
 let shadow_size = "1.5vmin";
 
 //////////////////////////////////GAMEPLAY//////////////////////////////
@@ -512,7 +510,9 @@ function sizeControls() {
             break;
         }
     }
-    //console.log("ROWS SHOULD BE", num_rows);
+    if (controls.length < 7) num_rows = 2;
+    console.log("ROWS SHOULD BE", num_rows, controls.length);
+    
 
     let controlAreaWidth = (Math.ceil(num_controls / num_rows) * control_size) + (num_rows * 2 * control_margin);
 
@@ -523,6 +523,8 @@ function sizeControls() {
         color.style.height = control_size + "px";
         color.style.margin = control_margin + "px";
     });
+
+    setShape(shape);
 }
 
 function id(id) { return document.getElementById(id) }
