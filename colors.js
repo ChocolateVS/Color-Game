@@ -9,6 +9,13 @@ let option_input = {
     dark: "rgb(62 62 62)"
 }
 
+let classic_example = {
+    one: {
+        light: "classic_example_1_light.png",
+        dark: "classic_example_1_dark.png"
+    }
+}
+
 let shadows = {
     default: {
         light: "#888888",
@@ -100,6 +107,11 @@ let dropDown = {
         light: "#000000",
         dark: "#FFFFFF"
     }
+}
+
+let svg = {
+    light: "#000000",
+    dark: "#FFFFFF"
 }
 
 let colors = {

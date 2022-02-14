@@ -2,15 +2,16 @@
 <html>
     <head>
         <title>Color Game</title>
-        <link rel="stylesheet" href="mobile.css" media="screen and (max-device-width: 1100px)">
-        <link rel="stylesheet" href="desktop.css" media="screen and (min-device-width: 1100px)" />
+        <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 900px)">
+        <link rel="stylesheet" href="desktop.css" media="screen and (min-width: 900px)" />
         <link rel="stylesheet" href="global.css" />
         <link rel="stylesheet" href="dropdown.css" />
         <link rel="stylesheet" href="slider.css" />
+        <link rel="stylesheet" href="help_menu.css" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Rowdies:wght@700&display=swap" rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
 
@@ -19,98 +20,121 @@
     </head>
     <body>
         <div class="header" id="header">
-            <div id="shape">
-                <input type="button" class="shape" id="square_option" onclick="setShape(2)">
-                <input type="button" class="shape" id="rounded_option" onclick="setShape(1)">
-                <input type="button" class="shape" id="cell_option" onclick="setShape(0)">
+            <div class="left" id="left">
+                <div id="help" class="help"> 
+                    <svg id="help_svg" onclick="showHelp()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                        <path fill="var(--svg-color)" d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"></path>
+                    </svg>
+                </div>
             </div>
             <div id="header_middle">
                 <h1 id="header_text">Color Game</h1>
-                <button id="resetButton"><img id="reset_img" src="reset.png" onclick="loadGame()"></button>
             </div>
             
-            <div id="options" class="options">
-                <!-- OPTIONS -->
-                <div class="dropdown">
-                    <button class="dropbtn">Options ˅</button>
-                    <div class="dropdown-content">
+            <div id="right" class="right">
+                <div id="options" class="options">
+                
+                    <!-- OPTIONS -->
+                    <div class="dropdown">
+                        <button class="dropbtn">Options ˅</button>
+                        <div class="dropdown-content">
+    
+                            <!-- Reset Game -->
+                            <div class="option control">
+                                <p class="option_name">Reset Game:</p>
+                                <button id="resetButton"><img id="reset_img" src="reset.png" onclick="loadGame()"></button>
+                            </div>
+    
+                            <!-- Number of guesses -->
+                            <div class="option control">
+                                <p class="option_name">Number of Guesses:</p>
+                                <input class="numInput" type="number" id="guessesInput" value="6" min="1" max="20">
+                            </div>
+    
+                            <!-- Guess Length -->
+                            <div class="option control">
+                                <p class="option_name">Guess Size:</p>
+                                <input class="numInput" type="number" id="guessSizeInput" value="4" min="1" max="10">
+                            </div>
+    
+                            <!-- Number of colors -->
+                            <div class="option control">
+                                <p class="option_name">Number of colors:</p>
+                                <input class="numInput" type="number" id="numColorsInput" value="4">
+                            </div>
+    
+                            <!-- Red Highlights -->
+                            <div class="option control">
+                                <p class="option_name">Red Highlights</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="redHighlightsSwitch" checked>
+                                    <span class="slider round red"></span>
+                                </label>
+                            </div>
+    
+                            <!-- Highlights -->
+                            <div class="option control">
+                                <p class="option_name">Highlights</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="highlightsSwitch" checked>
+                                    <span class="slider round default"></span>
+                                </label>
+                            </div>
+    
+                            <!-- Guess Stats -->
+                            <div class="option control">
+                                <p class="option_name">Show Guess Stats</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="statsSwitch">
+                                    <span class="slider round default"></span>
+                                </label>
+                            </div>
+    
+                            <!-- Hide Incorrect Guesses -->
+                            <div class="option control">
+                                <p class="option_name">Hide Incorrect Guesses</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="hideIncorrectSwitch" checked>
+                                    <span class="slider round default"></span>
+                                </label>
+                            </div>
+    
+                            <!-- Theme -->
+                            <div class="option control">
+                                <p class="option_name">Dark Mode</p>
+                                <label class="switch">
+                                    <input type="checkbox" id="themeSwitch">
+                                    <span class="slider round theme"></span>
+                                </label>
+                            </div>
 
-                        <!-- Number of guesses -->
-                        <div class="option control">
-                            <p class="option_name">Number of Guesses:</p>
-                            <input class="numInput" type="number" id="guessesInput" value="6" min="1" max="20">
+                            <!-- Shape -->
+                            <div class="option control">
+                                <input type="button" class="shape" id="square_option" onclick="setShape(2)">
+                                <input type="button" class="shape" id="rounded_option" onclick="setShape(1)">
+                                <input type="button" class="shape" id="cell_option" onclick="setShape(0)">
+                            </div>
+    
                         </div>
-
-                        <!-- Guess Length -->
-                        <div class="option control">
-                            <p class="option_name">Guess Size:</p>
-                            <input class="numInput" type="number" id="guessSizeInput" value="4" min="1" max="10">
+                    </div>
+    
+                    <!-- MODE -->
+                    <div class="dropdown">
+                        <button class="dropbtn" id="mode_header" class="option_header">Normal Mode ˅</button>
+                        <div class="dropdown-content">
+                            <input type="button" id="modeBtn_normal" class="option_button" value="Normal Mode" onclick="setMode('normal')">
+                            <input type="button" id="modeBtn_classic" class="option_button" value="Classic Mode" onclick="setMode('classic')">
+                            <input type="button" id="modeBtn_hard" class="option_button" value="Hard Mode" onclick="setMode('hard')">
                         </div>
-
-                        <!-- Number of colors -->
-                        <div class="option control">
-                            <p class="option_name">Number of colors:</p>
-                            <input class="numInput" type="number" id="numColorsInput" value="5">
-                        </div>
-
-                        <!-- Red Highlights -->
-                        <div class="option control">
-                            <p class="option_name">Red Highlights</p>
-                            <label class="switch">
-                                <input type="checkbox" id="redHighlightsSwitch" checked>
-                                <span class="slider round red"></span>
-                            </label>
-                        </div>
-
-                        <!-- Highlights -->
-                        <div class="option control">
-                            <p class="option_name">Highlights</p>
-                            <label class="switch">
-                                <input type="checkbox" id="highlightsSwitch" checked>
-                                <span class="slider round default"></span>
-                            </label>
-                        </div>
-
-                        <!-- Guess Stats -->
-                        <div class="option control">
-                            <p class="option_name">Show Guess Stats</p>
-                            <label class="switch">
-                                <input type="checkbox" id="statsSwitch">
-                                <span class="slider round default"></span>
-                            </label>
-                        </div>
-
-                        <!-- Hide Incorrect Guesses -->
-                        <div class="option control">
-                            <p class="option_name">Hide Incorrect Guesses</p>
-                            <label class="switch">
-                                <input type="checkbox" id="hideIncorrectSwitch" checked>
-                                <span class="slider round default"></span>
-                            </label>
-                        </div>
-
-                        <!-- Theme -->
-                        <div class="option control">
-                            <p class="option_name">Dark Mode</p>
-                            <label class="switch">
-                                <input type="checkbox" id="themeSwitch">
-                                <span class="slider round theme"></span>
-                            </label>
-                        </div>
-
                     </div>
                 </div>
-
-                <!-- MODE -->
-                <div class="dropdown">
-                    <button class="dropbtn" id="mode_header" class="option_header">Normal Mode ˅</button>
-                    <div class="dropdown-content">
-                        <input type="button" id="modeBtn_normal" class="option_button" value="Normal Mode" onclick="setMode('normal')">
-                        <input type="button" id="modeBtn_classic" class="option_button" value="Classic Mode" onclick="setMode('classic')">
-                        <input type="button" id="modeBtn_hard" class="option_button" value="Hard Mode" onclick="setMode('hard')">
-                    </div>
+                <div id="settings" class="settings">
+                    <svg id="setting_svg" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                        <path fill="var(--svg-color)" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"></path>
+                    </svg>
                 </div>
             </div>
+
         </div>
         
         <div class="gameBody" id="gameBody">
@@ -129,6 +153,140 @@
 
         <div class="popup" id="popup">
             <p class="text" id="popup_content">Reset game to apply changes</p>
+        </div>
+
+        <div class="help_menu" id="help_menu">
+            <svg id="help_back_button" class="help_button" onclick="showHelp()" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24"
+                viewBox="0 0 684 684">
+            <path id="Imported Path"
+            fill="var(--svg-color)" 
+                    d="M 640.67,256.33
+                    C 640.67,256.33 134.64,256.33 134.64,256.33
+                        134.64,256.33 289.52,70.31 289.52,70.31
+                        295.68,62.90 299.39,53.39 299.39,43.00
+                        299.39,19.41 280.26,0.28 256.67,0.28
+                        243.46,0.28 231.65,6.27 223.81,15.69
+                        223.81,15.69 10.48,271.69 10.48,271.69
+                        9.05,273.71 7.77,275.84 6.64,278.07
+                        6.64,280.23 6.64,281.51 3.65,283.64
+                        1.76,288.38 0.71,293.57 0.67,299.00
+                        0.71,304.42 1.76,309.60 3.64,314.36
+                        3.65,316.49 3.65,317.77 6.64,319.91
+                        7.76,322.14 9.04,324.28 10.47,326.31
+                        10.47,326.31 223.81,582.31 223.81,582.31
+                        231.64,591.69 243.42,597.67 256.60,597.67
+                        256.62,597.67 256.64,597.67 256.67,597.67
+                        256.69,597.67 256.72,597.67 256.75,597.67
+                        267.10,597.67 276.59,593.98 283.97,587.85
+                        293.40,580.03 299.41,568.22 299.41,555.01
+                        299.41,544.62 295.69,535.09 289.52,527.69
+                        289.52,527.69 134.64,341.67 134.64,341.67
+                        134.64,341.67 640.67,341.67 640.67,341.67
+                        664.23,341.67 683.33,322.56 683.33,299.00
+                        683.33,275.44 664.23,256.33 640.67,256.33
+                        640.67,256.33 640.67,256.33 640.67,256.33 Z" />
+            </svg>
+
+            <svg id="help_exit_button" class="help_button" onclick="showHelp()" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                <path fill="var(--svg-color)" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+            </svg>
+
+
+            <h1 id="help_menu_header">How to play</h1>
+
+            <div id="help_blocks" class="help_blocks">
+                <div class="help_block" id="instructions">
+                    <h2 class="help_menu_h2">Gameplay Objective</h2>
+                    <h3 class="help_menu_h3">
+                        The aim of the game is to figure out a sequence of colors
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        Start by making a guess
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        Make a guess by selecting a cell and then selecting a color to apply to the cell. Once you fill in a row (complete your guess) click ok to submit the guess.
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        TIP: The first cell is selected by default, select a color to apply it directly. After applying the color, the selected cell will move accross
+                    </h3>
+
+                </div>
+
+                <div class="help_block" id="instructions">
+                    <h2 class="help_menu_h2">Normal Mode - Highlights</h2>
+                    <h3 class="help_menu_h3">
+                        In normal mode, each time you make a guess cells are highlighted to show you whether the color you have guessed is:
+                    </h3>
+                    <div class="help_highlight">
+                        <div class="help_highlight_green"></div>
+                        <p id="help_green_text">In the correct position</p>
+                    </div>
+                    <div class="help_highlight">
+                        <div class="help_highlight_blue"></div>
+                        <p id="help_blue_text">In the sequence of colors but in the wrong position</p>
+                    </div>
+                    <div class="help_highlight">
+                        <div class="help_highlight_red"></div>
+                        <p id="help_red_text">Not in the sequence</p>
+                    </div>
+                    <h3 class="help_menu_h3">
+                        Use this information to figure out which colors belong in each position and solve the sequence.
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        TIP: You can turn all highlights on/off in the options menu. You can turn on/off only the red highlights for a cleaner look
+                    </h3>
+                </div>
+
+                <div class="help_block" id="instructions">
+                    <h2 class="help_menu_h2">Classic Mode</h2>
+                    <h3 class="help_menu_h3">
+                        In Classic mode, you are only given the number of correct colors, and colors in incorrect postions
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        Therefore, highlights are disabled.
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        In the following guess we can determine the following: 
+                        <br>
+                        - There are two colors in the correct position (the number next to the green circle)
+                        <br>
+                        - There and two colors that are in the sequence but in an incorrect position (the number next to the blue circle)
+                    </h3>
+                    <img id="classic_img_1" src="classic_example_1_light.png">
+                    
+                </div>
+
+                <div class="help_block" id="instructions">
+                    <h2 class="help_menu_h2">Hard Mode</h2>
+                    <h3 class="help_menu_h3">
+                        NOTE: NOT IMPLEMENTED
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        Hard Mode is basically the same as normal mode. The only difference is that once you discover a color's position, you must use it in your following guesses
+                    </h3>
+                </div>
+
+                <div class="help_block" id="instructions">
+                    <h2 class="help_menu_h2">Options</h2>
+                    <h3 class="help_menu_h3">
+                        <strong> Number of guesses </strong> - Sets the number of guesses you have to guess the sequence
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        <strong> Guess Size </strong> - Set's how many colors in a guess
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        <strong>Number of colors </strong> - Set the number of colors that are selected at random, and could be part of the sequence
+                    </h3>
+                    <h3 class="help_menu_h3">
+                        <strong>Guess Stat </strong> - Displays the Guess Stats (Classic mode counters)
+                    </h3>
+                    <h3 class="help_menu_h3">
+                    </strong>Hide Incorect Guesses</strong> - Recommended for Normal and Hard Mode. Not Recommended for Classic mode
+                    </h3>
+                </div>
+
+            </div>
         </div>
         
     </body>

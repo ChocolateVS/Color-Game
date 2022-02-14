@@ -14,6 +14,7 @@ let stats;
 let useableColors = {};
 let hidden_controls;
 let hideIncorrectGuesses;
+let helpShown = false;
 
 let previous_green;
 let previous_blue;
@@ -172,16 +173,12 @@ function checkGuess() {
         });      
 
         if (win) {
-            party.confetti(id("gameArea"), {
-                count: party.variation.range(80, 80)
-            });
-            endGame();
+            winGame();
         }
         else {
             guessed = {};
             if (guess + 1 == guesses) {
-                alert("YOU LOSE :(");
-                endGame();
+                loseGame();
             }
             else {
                 guess += 1;
@@ -250,7 +247,7 @@ function setActiveRow() {
 //Sets all cells to default border
 function resetBorders() {
     document.querySelectorAll(".cell").forEach(cell => {
-        if (cell.id < guess * 4) {
+        if (cell.id < guess * guess_length) {
             cell.style.border = "none";
         }
         else {
@@ -433,7 +430,8 @@ function setTheme() {
     root.style.setProperty("--", shadows.default[theme]);
     root.style.setProperty("--dark-mode-switch", option_input["dark"]);
     root.style.setProperty("--option-input-background", option_input[theme]);
-
+    root.style.setProperty("--svg-color", svg[theme]);
+    id("classic_img_1").src = classic_example.one[theme];
 
     removeShadow(["modeBtn_normal", "modeBtn_classic", "modeBtn_hard"]);
     setShadow(["modeBtn_" + mode], "5px", option_color );
@@ -493,7 +491,7 @@ function sizeControls() {
     let controls = document.querySelectorAll(".color");
     let num_controls = controls.length;
 
-    console.log("SIZING CONTROLS: ", num_controls);
+    //console.log("SIZING CONTROLS: ", num_controls);
 
     //Size is 80% of a guess cell
     let control_margin = 2;
@@ -501,7 +499,7 @@ function sizeControls() {
 
     let area_height = id("controlArea").getBoundingClientRect().height;
 
-    console.log("CONTROL SIZE: ", control_size);
+    //console.log("CONTROL SIZE: ", control_size);
 
     //Find the max rows we can have:
     let num_rows;
@@ -511,14 +509,14 @@ function sizeControls() {
             break;
         }
     }
-    console.log("ROWS SHOULD BE", num_rows);
+    //console.log("ROWS SHOULD BE", num_rows);
 
     if (num_controls < 7) controlAreaWidth = (control_size * 3) + (6 * control_margin);
     else controlAreaWidth = Math.ceil(((num_controls / num_rows) * control_size) + (num_rows * 2 * control_margin));
 
     id("controlArea").style.width = controlAreaWidth + "px";
 
-    console.log("CALCED WIDTH", controlAreaWidth);
+    //console.log("CALCED WIDTH", controlAreaWidth);
 
     root.style.setProperty("--control-width", control_size + "px");
     root.style.setProperty("--control-height", control_size + "px");
@@ -683,22 +681,65 @@ function setObjective() {
     }
 }
 
-function endGame() {
+function endGame(win) {
     id("controlArea").style.display = "none";
     id("endArea").style.display = "flex";
     removeEventListeners();
     removeAllBorders();
-
-    for (let i = 0; i < guess_length; i++) {
-        let endColor = document.createElement("div");
-        endColor.setAttribute("class", "endColor");
-        endColor.style.backgroundColor = useableColors[objective[i]];
-        id("endArea").appendChild(endColor);
-    }
 
     //remove rows after last guess
     for (let i = guess + 1; i < guesses; i++) {
         id("row" + i).style.display = "none";
     }
 
+}
+
+function winGame() {
+    party.confetti(id("gameArea"), {
+        count: party.variation.range(80, 80)
+    });
+
+    let message = document.createElement("p");
+    message.setAttribute("class", "winMessage");
+    message.textContent ="You Win !";
+
+    let guesses_taken_message = document.createElement("p");
+    guesses_taken_message.setAttribute("class", "winMessage");
+    guesses_taken_message.textContent = "Guesses Taken: " +  (guess + 1);
+
+    id("endArea").appendChild(message);
+    id("endArea").appendChild(guesses_taken_message);
+
+    endGame();
+}
+
+function loseGame() {
+    let loseArea = document.createElement("div");
+    loseArea.setAttribute("class", "loseArea");
+
+    let message = document.createElement("p");
+    message.setAttribute("class", "loseMessage");
+    message.textContent ="You Lose :(";
+
+    let looking_for_message = document.createElement("p");
+    looking_for_message.setAttribute("class", "loseMessage");
+    looking_for_message.textContent = "Here's what you were looking for";
+
+    for (let i = 0; i < guess_length; i++) {
+        let endColor = document.createElement("div");
+        endColor.setAttribute("class", "endColor");
+        endColor.style.backgroundColor = useableColors[objective[i]];
+        loseArea.appendChild(endColor);
+    }
+    id("endArea").appendChild(message);
+    id("endArea").appendChild(looking_for_message);
+    id("endArea").appendChild(loseArea);
+    endGame();
+}
+
+function showHelp() {
+    console.log("HELPING");
+    if (!helpShown) id("help_menu").style.display = "flex";
+    else id("help_menu").style.display = "none";
+    helpShown = !helpShown;
 }

@@ -4,7 +4,7 @@
     height:15vmin;
 }
 
-#options, .options, #shape {
+#options, .options, .left {
     display: none;
 }
 
@@ -15,4 +15,12 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
+}
+
+.settings {
+    display: block;
+}
+
+.help_blocks {
+    max-width: 90%;
 }

@@ -14,3 +14,11 @@
     height: 8vmin;
     border-radius:2vmin;
 }
+
+.settings {
+    display: none;
+}
+
+.help_blocks {
+    max-width: 50%;
+  }
