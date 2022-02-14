@@ -120,6 +120,9 @@ html, body {
 .color {
     border:1px solid;
     border-color: var(--control-border);
+    width: var(--control-width);
+    height: var(--control-height);
+    margin: var(--control-margin);
 }
 
 .color:hover {
@@ -135,7 +138,7 @@ html, body {
     color: var(--text-color);
     font-family: 'Rowdies', cursive;
     font-weight: 200;
-    font-size: 37px;
+    font-size: 3.5vmin;
     line-height: 100%;
     letter-spacing: 0.01em;
     text-align: center;

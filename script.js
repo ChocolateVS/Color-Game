@@ -489,18 +489,19 @@ function removeShadow(items) {
 }
 
 function sizeControls() {
+    let controlAreaWidth;
     let controls = document.querySelectorAll(".color");
     let num_controls = controls.length;
 
-    //console.log("SIZING CONTROLS: ", num_controls);
+    console.log("SIZING CONTROLS: ", num_controls);
 
     //Size is 80% of a guess cell
-    let control_size = document.querySelector(".cell").getBoundingClientRect().width * 0.8;
     let control_margin = 2;
+    let control_size = (document.querySelector(".cell").getBoundingClientRect().width * 0.8);
 
     let area_height = id("controlArea").getBoundingClientRect().height;
 
-    //console.log("CONTROL SIZE: ", control_size);
+    console.log("CONTROL SIZE: ", control_size);
 
     //Find the max rows we can have:
     let num_rows;
@@ -510,19 +511,18 @@ function sizeControls() {
             break;
         }
     }
-    if (controls.length < 7) num_rows = 2;
-    console.log("ROWS SHOULD BE", num_rows, controls.length);
-    
+    console.log("ROWS SHOULD BE", num_rows);
 
-    let controlAreaWidth = (Math.ceil(num_controls / num_rows) * control_size) + (num_rows * 2 * control_margin);
+    if (num_controls < 7) controlAreaWidth = (control_size * 3) + (6 * control_margin);
+    else controlAreaWidth = Math.ceil(((num_controls / num_rows) * control_size) + (num_rows * 2 * control_margin));
 
     id("controlArea").style.width = controlAreaWidth + "px";
 
-    controls.forEach(color => {
-        color.style.width = control_size + "px";
-        color.style.height = control_size + "px";
-        color.style.margin = control_margin + "px";
-    });
+    console.log("CALCED WIDTH", controlAreaWidth);
+
+    root.style.setProperty("--control-width", control_size + "px");
+    root.style.setProperty("--control-height", control_size + "px");
+    root.style.setProperty("--control-margin", control_margin + "px");
 
     setShape(shape);
 }
